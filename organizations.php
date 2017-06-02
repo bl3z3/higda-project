@@ -23,7 +23,7 @@
           <button type="button" class="btn btn-primary"><a href="maping.php">Maping</a></button>
         </div>
       </div>
-      <!-- data elements -->
+      <!-- Organisation units -->
       <div class="col-sm-8">
         <form >
           <div class="form-group">
@@ -36,6 +36,7 @@
             <tr>
               <th>Name</th>
               <th>Code</th>
+              <th>Level</th>
             </tr>
             <tbody>
               <?php
@@ -43,7 +44,7 @@
               $curl = curl_init();
 
               curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://play.dhis2.org/release1/api/dataElements.json?paging=false&fields=name%2Ccode",
+                CURLOPT_URL => "https://play.dhis2.org/release1/api/organisationUnits.json?paging=false&fields=name%2Ccode%2Clevel",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -67,15 +68,14 @@
               } else {
                 $data = json_decode($response, true);
 
-                $clinics = $data["dataElements"];
+                $clinics = $data["organisationUnits"];
                 
                 foreach ($clinics as $clinic) {
                   echo '<tr>';
-
                   echo '<td>' . $clinic['name'] . '</td>';
 
                   echo '<td>' . $clinic['code'] . '</td>';
-
+                    echo '<td>' . $clinic['level'] . '</td>';
                   echo '</tr>';
                 }
               }
@@ -83,8 +83,8 @@
             ?>
             </tbody>
           </table>
-          </div>
         </div>
+      </div>
       <div class="col-sm-2"></div>
     </div>
   </div>
